@@ -1,109 +1,92 @@
 #!/usr/bin/python3
-'''
-N Queens
-'''
-
-
+''' Python3 program to solve N Queen '''
 import sys
 
 
-def verify(a, b):
-    '''
-    nqueens
-    '''
-    if a[0] == b[0] or a[1] == b[1]:
+if len(sys.argv) != 2:
+    print('Usage: nqueens N')
+    exit(1)
+N = sys.argv[1]
+try:
+    N = int(N)
+
+except:
+    print('N must be a number')
+    exit(1)
+
+if N < 4:
+    print('N must be at least 4')
+    exit(1)
+
+k = 1
+
+
+def printSolution(board):
+<<<<<<< HEAD
+""" A utility function to print solution """
+=======
+    """ A utility function to print solution """
+>>>>>>> edf7d1035eaf240a5f9ea7e096db12608fb50a56
+    queens = []
+    global k
+    k = k + 1
+    for i in range(N):
+        for j in range(N):
+            if board[i][j] == 1:
+                queens.append([i, j])
+    print(queens)
+
+
+def isSafe(board, row, col):
+    for i in range(col):
+        if board[row][i]:
+            return False
+    i = row
+    j = col
+    while i >= 0 and j >= 0:
+        if board[i][j]:
+            return False
+        i -= 1
+        j -= 1
+    i = row
+    j = col
+    while j >= 0 and i < N:
+        if board[i][j]:
+            return False
+        i = i + 1
+        j = j - 1
+    return True
+
+
+def solveNQUtil(board, col):
+<<<<<<< HEAD
+""" This function solves the N Queen problem """
+=======
+    """ This function solves the N Queen problem """
+>>>>>>> edf7d1035eaf240a5f9ea7e096db12608fb50a56
+    if col == N:
+        printSolution(board)
         return True
-
-    rx = abs(a[0] - b[0])
-    ry = abs(a[1] - b[1])
-
-    r = min(rx, ry)
-
-    if r == 0:
-        return False
-
-    if a[0] > b[0]:
-        if a[1] > b[1]:
-            x = [a[0] - r, a[1] - r]
-            if x == b:
-                return True
-        else:
-            x = [a[0] - r, a[1] + r]
-            if x == b:
-                return True
-    if b[0] > a[0]:
-        if b[1] > a[1]:
-            x = [b[0] - r, b[1] - r]
-            if x == a:
-                return True
-        else:
-            x = [b[0] - r, b[1] + r]
-            if x == a:
-                return True
-    return False
+    res = False
+    for i in range(N):
+        if isSafe(board, i, col):
+            board[i][col] = 1
+            res = solveNQUtil(board, col + 1) or res
+            board[i][col] = 0
+    return res
 
 
-def do_queens(arr):
-    '''
-    nqueens
-    '''
-    ln = len(arr)
-    for i in range(ln - 1):
-        c = arr[i]
-        for j in range(i + 1, ln):
-            if verify(c, arr[j]):
-                return True
-    return False
+def solveNQ():
+<<<<<<< HEAD
+""" solve NQ """
+=======
+    """ solve NQ """
+>>>>>>> edf7d1035eaf240a5f9ea7e096db12608fb50a56
+    board = [[0 for j in range(N)] for i in range(N)]
+    if solveNQUtil(board, 0) is False:
+        pass
+        return
+    return
 
 
-def generate(arr, line_index, num, possible_sol, new_arr=[]):
-    '''
-    nqueens
-    '''
-    for i in arr[line_index]:
-        n_a = new_arr[:]
-        if do_queens(n_a + [i]) is False:
-            n_a.append(i)
-            if line_index + 1 == num:
-                possible_sol.append(n_a)
-            else:
-                generate(arr, line_index + 1, num, possible_sol, n_a)
-
-
-def nqueen(num):
-    '''
-    nqueens
-    '''
-    possible_sol = []
-    lines = []
-
-    for i in range(num):
-        current_list = []
-        for j in range(num):
-            a = [i, j]
-            if a not in lines:
-                current_list.append(a)
-        lines.append(current_list)
-
-    generate(lines, 0, num, possible_sol)
-
-    return possible_sol
-
-
-def main():
-    if len(sys.argv) != 2:
-        print('Usage: nqueen N')
-        exit(1)
-    elif not sys.argv[1].isdigit():
-        print('N must be a number')
-        exit(1)
-    elif int(sys.argv[1]) < 4:
-        print('N must be at least 4')
-        exit(1)
-    num = int(sys.argv[1])
-    possible_sol = nqueen(num)
-    for ps in possible_sol:
-        print(ps)
-
-
-main()
+solveNQ()
